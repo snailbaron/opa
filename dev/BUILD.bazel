@@ -1,0 +1,23 @@
+load("@bazel_env.bzl", "bazel_env")
+load("@multitool//:tools.bzl", "TOOLS")
+load("@rules_go//go:def.bzl", "TOOLS_NOGO", "nogo")
+
+bazel_env(
+    name = "env",
+    tools = {
+        "buildifier": TOOLS["buildifier"],
+        "go": "@rules_go//go",
+        "pre-commit": "@pre-commit//file",
+    },
+    watch_files = {
+        "_common": [
+            "MODULE.bazel",
+        ],
+    },
+)
+
+nogo(
+    name = "nogo",
+    visibility = ["//visibility:public"],
+    deps = TOOLS_NOGO,
+)

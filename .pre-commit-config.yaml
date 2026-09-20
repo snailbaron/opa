@@ -1,0 +1,32 @@
+repos:
+  - repo: local
+    hooks:
+      - id: go-mod-tidy
+        name: go mod tidy
+        entry: go mod tidy
+        language: system
+        pass_filenames: false
+
+      - id: gazelle
+        name: gazelle
+        entry: bazel run //:gazelle
+        language: system
+        pass_filenames: false
+
+      - id: bazel-mod-tidy
+        name: bazel mod tidy
+        entry: bazel mod tidy
+        language: system
+        pass_filenames: false
+
+      - id: bazel-lockfile-update
+        name: Bazel lockfile update
+        entry: bazel mod deps --lockfile_mode=update
+        language: system
+        pass_filenames: false
+
+      - id: buildifier
+        name: buildifier
+        entry: buildifier -mode fix -lint fix
+        language: system
+        types_or: [bazel]
